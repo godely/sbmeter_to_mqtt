@@ -13,7 +13,8 @@ from bluepy.btle import Scanner, DefaultDelegate
 import datetime
 import binascii
 import paho.mqtt.client as mqtt
- 
+import paho.mqtt.publish as publish
+
 # Import configuration variables from sbm2mqtt_config.py file - Must be in the same folder as this script
 from sbm2mqtt_config import (
     mqtt_host,
@@ -96,11 +97,7 @@ class ScanDelegate(DefaultDelegate):
                             + " ...\n\n    "
                             + msg_data
                         )
-                        mqttc = mqtt.Client(mqtt_client)
-                        mqttc.username_pw_set(mqtt_user, mqtt_pass)
-                        mqttc.connect(mqtt_host, mqtt_port)
-                        mqttc.publish(mqtt_topic + mac, msg_data, 1)
-
+                        publish.single(mqtt_topic+mac, msg_data, retain=False, hostname=mqtt_host, port=mqtt_port, client_id=mqtt_client, keepalive=30, auth={'username': mqtt_user, 'password': mqtt_pass}, protocol=mqtt.MQTTv311)
 
 def main():
 

@@ -1,5 +1,8 @@
 #!/usr/bin/env python3
 
+# After editing this file rename it to
+# sbm2mqtt_config.py
+
 # Replace with your own values
 # Place in same folder as sbm2mqtt.py
 
